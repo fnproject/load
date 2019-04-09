@@ -6,10 +6,10 @@ github.com/PuerkitoBio/urlesc
 github.com/asaskevich/govalidator
 # github.com/fnproject/fn_go v0.0.0-20181210161029-1c373f73ab3a
 github.com/fnproject/fn_go/clientv2
-github.com/fnproject/fn_go/modelsv2
 github.com/fnproject/fn_go/clientv2/apps
-github.com/fnproject/fn_go/clientv2/call
 github.com/fnproject/fn_go/clientv2/fns
+github.com/fnproject/fn_go/modelsv2
+github.com/fnproject/fn_go/clientv2/call
 github.com/fnproject/fn_go/clientv2/operations
 github.com/fnproject/fn_go/clientv2/triggers
 # github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
@@ -58,5 +58,22 @@ golang.org/x/text/width
 golang.org/x/text/secure/bidirule
 golang.org/x/text/unicode/bidi
 golang.org/x/text/transform
+# gonum.org/v1/gonum v0.0.0-20190409070159-6e46824336d2
+gonum.org/v1/gonum/stat
+gonum.org/v1/gonum/floats
+gonum.org/v1/gonum/mat
+gonum.org/v1/gonum/internal/asm/f64
+gonum.org/v1/gonum/blas
+gonum.org/v1/gonum/blas/blas64
+gonum.org/v1/gonum/blas/cblas128
+gonum.org/v1/gonum/lapack
+gonum.org/v1/gonum/lapack/lapack64
+gonum.org/v1/gonum/blas/gonum
+gonum.org/v1/gonum/lapack/gonum
+gonum.org/v1/gonum/internal/asm/c128
+gonum.org/v1/gonum/internal/asm/c64
+gonum.org/v1/gonum/internal/asm/f32
+gonum.org/v1/gonum/internal/cmplx64
+gonum.org/v1/gonum/internal/math32
 # gopkg.in/yaml.v2 v2.2.2
 gopkg.in/yaml.v2
