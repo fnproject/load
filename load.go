@@ -28,7 +28,7 @@ import (
 )
 
 func main() {
-	fmt.Println(time.Now().Format(time.StampMilli))
+	start := time.Now()
 	n := flag.Int("n", 1, "number of invokes")
 	p := flag.Int("p", 1, "parallel threads")
 	appName := flag.String("app", "", "app name of function")
@@ -114,6 +114,7 @@ func main() {
 
 	var wg sync.WaitGroup
 	var plot points
+	var plock sync.Mutex
 	for i := 0; i < threads; i++ {
 		wg.Add(1)
 		go func() {
@@ -132,7 +133,10 @@ func main() {
 					log.Println(err)
 				}
 				end := time.Now()
+
+				plock.Lock()
 				plot = append(plot, point{start, end})
+				plock.Unlock()
 
 				if resp.StatusCode != 200 {
 					log.Printf("bad status code: %v", resp.StatusCode)
@@ -144,10 +148,11 @@ func main() {
 	}
 
 	wg.Wait()
-	fmt.Println(time.Now().Format(time.StampMilli))
+	end := time.Now()
+	// fmt.Println(end.Format(time.StampMilli))
 
 	sort.Sort(plot)
-	fmt.Println(plot)
+	// fmt.Println(plot)
 
 	// weight out the last 'threads' number - this shaves off cold start/freeze
 	var weights []float64
@@ -161,10 +166,24 @@ func main() {
 	std := time.Duration(stdf)
 	_, varif := stat.MeanVariance(floats, weights)
 	variance := time.Duration(varif)
+	_ = variance
 
 	median := plot[len(plot)/2].dur()
+	duration := end.Sub(start)
+	throughput := float64(invokes) / (float64(duration) / float64(time.Second))
 
-	fmt.Println("max:", plot[len(plot)-1].dur(), "min:", plot[0].dur(), "mean:", mean, "median:", median, "std:", std, "variance:", variance)
+	fmt.Println(
+		"n", invokes,
+		"p", threads,
+		"duration:", duration,
+		"tps:", throughput,
+		"max:", plot[len(plot)-1].dur(),
+		"min:", plot[0].dur(),
+		"mean:", mean,
+		"median:", median,
+		"std:", std,
+	//	"variance:", variance, TODO
+	)
 }
 
 type point struct {
